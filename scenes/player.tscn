@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://68gokcimd8x5"]
+
+[ext_resource type="Script" uid="uid://kktame37k7d1" path="res://addons/FirstPersonQuakelikeController/playerMovement.gd" id="1_dqkch"]
+[ext_resource type="Script" uid="uid://db8nimvdgoega" path="res://addons/FirstPersonQuakelikeController/ProceduralCurve.gd" id="4_dqkch"]
+
+[sub_resource type="Curve" id="Curve_qhqgy"]
+_data = [Vector2(0.047272727, 0), 0.0, 0.0, 0, 0, Vector2(0.96, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_dqkch"]
+script = ExtResource("4_dqkch")
+curve = SubResource("Curve_qhqgy")
+metadata/_custom_type_script = "uid://db8nimvdgoega"
+
+[sub_resource type="Curve" id="Curve_tuyoq"]
+
+[sub_resource type="Resource" id="Resource_ur7pv"]
+script = ExtResource("4_dqkch")
+curve = SubResource("Curve_tuyoq")
+metadata/_custom_type_script = "uid://db8nimvdgoega"
+
+[sub_resource type="Curve" id="Curve_y4r1p"]
+
+[sub_resource type="Resource" id="Resource_d2wvv"]
+script = ExtResource("4_dqkch")
+curve = SubResource("Curve_y4r1p")
+metadata/_custom_type_script = "uid://db8nimvdgoega"
+
+[sub_resource type="Curve" id="Curve_3v2ag"]
+_data = [Vector2(0.6040956, 0), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Resource" id="Resource_jej6c"]
+script = ExtResource("4_dqkch")
+curve = SubResource("Curve_3v2ag")
+metadata/_custom_type_script = "uid://db8nimvdgoega"
+
+[sub_resource type="Curve" id="Curve_f1ej7"]
+
+[sub_resource type="Resource" id="Resource_oprun"]
+script = ExtResource("4_dqkch")
+curve = SubResource("Curve_f1ej7")
+metadata/_custom_type_script = "uid://db8nimvdgoega"
+
+[sub_resource type="Curve" id="Curve_dqkch"]
+_data = [Vector2(0.1300578, 0.97776496), 0.0, 0.0, 0, 0, Vector2(0.8959538, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_qlg0r"]
+_data = [Vector2(0.09248555, 0.06613457), 0.0, 0.0, 0, 0, Vector2(0.9248555, 0.9999999), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_g2els"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g2els"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qhqgy"]
+radius = 0.2
+
+[node name="Player" type="CharacterBody3D" unique_id=1021239395 groups=["player"]]
+script = ExtResource("1_dqkch")
+jumpAnimation = SubResource("Resource_dqkch")
+landPosAnimation = SubResource("Resource_ur7pv")
+landRotAnimation = SubResource("Resource_d2wvv")
+slideTilt = 0.0
+slideAnimation = SubResource("Resource_jej6c")
+wallRunTilt = -4.0
+wallRunAnimation = SubResource("Resource_oprun")
+base_fov = 90.0
+max_fov_stretch = 10.0
+fov_change_speed = 2.0
+camera_tilt_lerp_speed = 12.0
+airStrafeCurve = SubResource("Curve_dqkch")
+slideDragCurve = SubResource("Curve_qlg0r")
+slopeAngleDragCurve = SubResource("Curve_g2els")
+dash_speed = 20.0
+dash_duration = 0.1
+bob_frequency_walk = 10.0
+bob_amplitude_crouch = 0.08
+
+[node name="CeilingCheck" type="ShapeCast3D" parent="." unique_id=1922765957]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0720765, 0.0037211776)
+shape = SubResource("SphereShape3D_g2els")
+target_position = Vector3(0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1922672013]
+transform = Transform3D(1.05, 0, 0, 0, 1.05, 0, 0, 0, 1.05, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="Head" type="Node3D" parent="." unique_id=227059989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91536444, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Head" unique_id=1932038248]
+shape = SubResource("SphereShape3D_qhqgy")
+spring_length = 0.0
+margin = 0.05
+
+[node name="Camera" type="Camera3D" parent="Head/SpringArm3D" unique_id=573537054]
+near = 0.01
